@@ -1,7 +1,7 @@
 Example Voting App
 =========
 
-This is a sample instavote application.
+This is a sample instavote application. This is a test after config change on Jenkins.
 
 Getting started
 ---------------
