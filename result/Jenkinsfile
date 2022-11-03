@@ -33,7 +33,7 @@ pipeline {
 
     post {
         always {
-            echo 'Build pipeline for result is complete...'
+            echo 'Build pipeline for result is completed...'
         }
         failure {
             slackSend (channel: "instavote-cd", message: "Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
