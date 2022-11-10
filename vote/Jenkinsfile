@@ -24,9 +24,11 @@ pipeline {
                 changeset "**/vote/**"
             }
             steps {
-                echo 'Running Unit Tests on vote app'
-                dir('vote') {
-                    sh 'nosetests -V'
+                withEnv(["HOME=${env.WORKSPACE}"]) {
+                    echo 'Running Unit Tests on vote app'
+                    dir('vote') {
+                        sh 'nosetests -V'
+                    }
                 }
             }
         }
