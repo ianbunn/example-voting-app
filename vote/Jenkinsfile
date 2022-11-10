@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'python:latest'
+            args '-v $HOME/.m2:/root/.m2'
         }
     }
 
@@ -11,11 +12,9 @@ pipeline {
                 changeset "**/vote/**"
             }
             steps {
-                withEnv(["HOME=${env.WORKSPACE}"]) {
-                    echo 'Compiling vote app'
-                    dir('vote') {
-                        sh 'pip install -r requirements.txt'
-                    }
+                echo 'Compiling vote app'
+                dir('vote') {
+                    sh 'pip install -r requirements.txt'
                 }
             }
         }
@@ -24,11 +23,9 @@ pipeline {
                 changeset "**/vote/**"
             }
             steps {
-                withEnv(["HOME=${env.WORKSPACE}"]) {
-                    echo 'Running Unit Tests on vote app'
-                    dir('vote') {
-                        sh 'which nosetests'
-                    }
+                echo 'Running Unit Tests on vote app'
+                dir('vote') {
+                    sh 'nosetests -V'
                 }
             }
         }
