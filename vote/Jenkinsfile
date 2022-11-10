@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'python:3.12.0a1-slim'
+            image 'python:latest'
         }
     }
 
@@ -13,7 +13,7 @@ pipeline {
             steps {
                 echo 'Compiling vote app'
                 dir('vote') {
-                    sh 'pip install --user admin -r requirements.txt'
+                    sh 'pip install --user -r requirements.txt'
                 }
             }
         }
