@@ -11,9 +11,11 @@ pipeline {
                 changeset "**/vote/**"
             }
             steps {
-                echo 'Compiling vote app'
-                dir('vote') {
-                    sh 'pip install --user -r requirements.txt'
+                withEnv(["HOME=${env.WORKSPACE}"]) {
+                    echo 'Compiling vote app'
+                    dir('vote') {
+                        sh 'pip install --user -r requirements.txt'
+                    }
                 }
             }
         }
