@@ -1,31 +1,31 @@
 pipeline {
     agent {
         docker {
-            image 'node:19.0-alpine3.16'
+            image 'python:latest'
+            args '--user root'
         }
     }
 
     stages {
         stage('build') {
             when{
-                changeset "**/result/**"
+                changeset "**/vote/**"
             }
             steps {
-                echo 'Compiling result app'
-                dir('result') {
-                    sh 'npm install'
+                echo 'Compiling vote app'
+                dir('vote') {
+                    sh 'pip install -r requirements.txt'
                 }
             }
         }
         stage('test') {
             when{
-                changeset "**/result/**"
+                changeset "**/vote/**"
             }
             steps {
-                echo 'Running Unit Tests on result app'
-                dir('result') {
-                    sh 'npm install'
-                    sh 'npm test'
+                echo 'Running Unit Tests on vote app'
+                dir('vote') {
+                    sh 'which nosetests'
                 }
             }
         }
@@ -33,7 +33,7 @@ pipeline {
 
     post {
         always {
-            echo 'Build pipeline for result is completed...'
+            echo 'Build pipeline for vote is completed...'
         }
         failure {
             slackSend (channel: "instavote-cd", message: "Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
