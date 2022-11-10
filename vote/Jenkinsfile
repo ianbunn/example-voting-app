@@ -27,8 +27,7 @@ pipeline {
                 withEnv(["HOME=${env.WORKSPACE}"]) {
                     echo 'Running Unit Tests on vote app'
                     dir('vote') {
-                        sh 'pip install nose'
-                        sh 'nosetests -V'
+                        sh 'nosetests --version'
                     }
                 }
             }
