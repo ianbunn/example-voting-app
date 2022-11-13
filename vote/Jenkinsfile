@@ -41,6 +41,7 @@ pipeline {
             agent any
             when{
                 changeset "**/vote/**"
+                branch "master"
             }
             steps {
                 echo 'Packaging vote app with docker'
@@ -48,6 +49,7 @@ pipeline {
                     docker.withRegistry('', 'dockerlogin') {
                         def voteImage = docker.build("irbb/vote:v${env.BUILD_ID}", "./vote")
                         voteImage.push()
+                        workerImage.push("${env.BRANCH_NAME}")
                     }
                 }
             }

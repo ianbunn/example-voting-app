@@ -39,6 +39,7 @@ pipeline {
             agent any
             when{
                 changeset "**/result/**"
+                branch "master"
             }
             steps {
                 echo 'Packaging result app with docker'
@@ -46,6 +47,7 @@ pipeline {
                     docker.withRegistry('', 'dockerlogin') {
                         def resultImage = docker.build("irbb/result:v${env.BUILD_ID}", "./result")
                         resultImage.push()
+                        workerImage.push("${env.BRANCH_NAME}")
                     }
                 }
             }
