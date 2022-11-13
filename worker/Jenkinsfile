@@ -63,7 +63,7 @@ pipeline {
             steps {
                 echo 'Packaging worker app with docker'
                 script {
-                    docker.withRegistry('https://hub.docker.com/v2', 'dockerlogin') {
+                    docker.withRegistry('https://hub.docker.com/v2/users/login', 'dockerlogin') {
                         def workerImage = docker.build("irbb/worker:v${env.BUILD_ID}", "./worker")
                         workerImage.push()
                         workerImage.push("${env.BRANCH_NAME}")
