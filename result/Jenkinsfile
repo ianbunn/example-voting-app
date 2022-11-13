@@ -46,7 +46,6 @@ pipeline {
                     docker.withRegistry('', 'dockerlogin') {
                         def resultImage = docker.build("irbb/result:v${env.BUILD_ID}", "./result")
                         resultImage.push()
-//                         resultImage.push("${env.BRANCH_NAME}")
                     }
                 }
             }

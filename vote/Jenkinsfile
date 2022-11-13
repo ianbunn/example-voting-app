@@ -32,7 +32,8 @@ pipeline {
             steps {
                 echo 'Running Unit Tests on vote app'
                 dir('vote') {
-                    sh 'which nosetests'
+                    sh 'pip install -r requirements.txt'
+                    sh 'nosetests -v'
                 }
             }
         }
@@ -47,7 +48,6 @@ pipeline {
                     docker.withRegistry('', 'dockerlogin') {
                         def voteImage = docker.build("irbb/vote:v${env.BUILD_ID}", "./vote")
                         voteImage.push()
-//                         voteImage.push("${env.BRANCH_NAME}")
                     }
                 }
             }
